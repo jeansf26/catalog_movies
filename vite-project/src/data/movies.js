@@ -13,7 +13,7 @@ async function buscarGeneros() {
   );
   const dados = await resposta.json();
   generos = dados.genres;
-  sessionStorage.setItem("generos", JSON.stringify(generos));
+  localStorage.setItem("generos", JSON.stringify(generos));
 }
 
 async function buscarTop160() {
@@ -25,7 +25,7 @@ async function buscarTop160() {
     const data = await response.json();
     filmes = filmes.concat(data.results);
   }
-  sessionStorage.setItem("filmes", JSON.stringify(filmes));
+  localStorage.setItem("filmes", JSON.stringify(filmes));
 }
 
 buscarGeneros();

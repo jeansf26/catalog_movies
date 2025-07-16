@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Favorites() {
   // Carrega os generos de filmes do sessionstorage ou inicializa com um array vazio
   const [generos] = useState(
-    JSON.parse(sessionStorage.getItem("generos")) || []
+    JSON.parse(localStorage.getItem("generos")) || []
   );
 
   const [selectedGenre, setSelectedGenre] = useState("todos");
@@ -13,7 +13,7 @@ function Favorites() {
   const navigate = useNavigate();
 
   // Carrega os filmes do sessionstorage ou inicializa com um array vazio
-  const [movies] = useState(JSON.parse(sessionStorage.getItem("filmes")) || []);
+  const [movies] = useState(JSON.parse(localStorage.getItem("filmes")) || []);
 
   const filteredMovies =
     selectedGenre === "todos"

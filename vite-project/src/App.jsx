@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
   const [generos] = useState(
-    JSON.parse(sessionStorage.getItem("generos")) || []
+    JSON.parse(localStorage.getItem("generos")) || []
   );
 
   const navigate = useNavigate();
 
-  const [movies] = useState(JSON.parse(sessionStorage.getItem("filmes")) || []);
+  const [movies] = useState(JSON.parse(localStorage.getItem("filmes")) || []);
 
   const [selectedGenre, setSelectedGenre] = useState("todos");
 

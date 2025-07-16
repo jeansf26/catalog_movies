@@ -7,8 +7,8 @@ function Movie() {
   const navigate = useNavigate();
   const movieID = parseInt(searchParams.get("id"));
 
-  const filmesSalvos = JSON.parse(sessionStorage.getItem("filmes")) || [];
-  const generosSalvos = JSON.parse(sessionStorage.getItem("generos")) || [];
+  const filmesSalvos = JSON.parse(localStorage.getItem("filmes")) || [];
+  const generosSalvos = JSON.parse(localStorage.getItem("generos")) || [];
 
   const [movie] = useState(filmesSalvos.find((m) => m.id === movieID) || {});
   const [generos] = useState(generosSalvos);
