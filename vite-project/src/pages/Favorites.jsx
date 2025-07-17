@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Favorites() {
   // Carrega os generos de filmes do sessionstorage ou inicializa com um array vazio
-  const [generos] = useState(
-    JSON.parse(localStorage.getItem("generos")) || []
-  );
+  const [generos] = useState(JSON.parse(localStorage.getItem("generos")) || []);
 
   const [selectedGenre, setSelectedGenre] = useState("todos");
 
@@ -24,7 +22,6 @@ function Favorites() {
 
   return (
     <div>
-      <script src="./data/movies.js"></script>
       <div className="bg-slate-200 flex flex-col sm:flex-row justify-center gap-6 p-6">
         <div
           onClick={() => {
