@@ -27,7 +27,7 @@ function Favorites() {
           onClick={() => {
             navigate("/");
           }}
-          className="bg-white hover:bg-slate-100 rounded-xl shadow-md px-6 py-4 text-center border-4 border-blue-500 w-[400px] h-[80px]"
+          className="bg-white hover:bg-slate-100 cursor-pointer rounded-xl shadow-md px-6 py-4 text-center border-4 border-blue-500 w-[400px] h-[80px]"
         >
           <h1 className="text-2xl sm:text-3xl font-bold text-blue-600">
             🎬 Catálogo de Filmes

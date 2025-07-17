@@ -1,20 +1,58 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MovieCard from "./components/MovieCard";
 import { useNavigate } from "react-router-dom";
 
 function App() {
-  const [generos] = useState(
-    JSON.parse(localStorage.getItem("generos")) || []
-  );
-
+  const [movies, setMovies] = useState([]);
+  const [generos, setGeneros] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("todos");
   const navigate = useNavigate();
 
-  const [movies] = useState(JSON.parse(localStorage.getItem("filmes")) || []);
+  const apiKey = "5fa2b72e548d5bb8d182e2c08f89c310";
+  const baseURL = "https://api.themoviedb.org/3/movie/top_rated";
 
-  const [selectedGenre, setSelectedGenre] = useState("todos");
+  // Buscar gêneros
+  async function buscarGeneros() {
+    const resposta = await fetch(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=pt-BR`
+    );
+    const dados = await resposta.json();
+    setGeneros(dados.genres);
+    localStorage.setItem("generos", JSON.stringify(dados.genres));
+  }
 
-  // Filtra os filmes com base no gênero selecionado
+  // Buscar filmes (top 160, 8 páginas)
+  async function buscarTop160() {
+    let todosFilmes = [];
+    for (let page = 1; page <= 8; page++) {
+      const response = await fetch(
+        `${baseURL}?api_key=${apiKey}&language=pt-BR&page=${page}`
+      );
+      const data = await response.json();
+      todosFilmes = todosFilmes.concat(data.results);
+    }
+    setMovies(todosFilmes);
+    localStorage.setItem("filmes", JSON.stringify(todosFilmes));
+  }
+
+  // Carrega dados ao iniciar
+  useEffect(() => {
+    const filmesLocal = JSON.parse(localStorage.getItem("filmes"));
+    const generosLocal = JSON.parse(localStorage.getItem("generos"));
+
+    if (filmesLocal && generosLocal) {
+      setMovies(filmesLocal);
+      setGeneros(generosLocal);
+    } else {
+      buscarGeneros();
+      buscarTop160();
+    }
+
+    const favoritosLocal = JSON.parse(localStorage.getItem("Favorites")) || [];
+    localStorage.setItem("Favorites", JSON.stringify(favoritosLocal));
+  }, []);
+
   const filteredMovies =
     selectedGenre === "todos"
       ? movies
@@ -63,7 +101,7 @@ function App() {
         </div>
       </div>
 
-      {/* Filmes filtrados */}
+      {/* Lista de filmes */}
       <MovieCard movies={filteredMovies} genres={generos} />
     </div>
   );
